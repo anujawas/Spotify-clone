@@ -1,5 +1,6 @@
 "use client";
 import AuthModel from "@/components/AuthModel";
+import UploadModel from "@/components/UploadModel";
 
 import { useEffect, useState } from "react"
 const ModelProvider = () => {
@@ -14,6 +15,7 @@ const ModelProvider = () => {
     return (
         <>
             <AuthModel />
+            <UploadModel />
         </>
     )
 }
