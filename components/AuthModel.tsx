@@ -21,7 +21,7 @@ const AuthModel = () => {
             router.refresh();
             onClose();
         }
-    }, [])
+    }, [session, router, onClose])
 
 
     const onChange = (open: boolean) => {
