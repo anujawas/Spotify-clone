@@ -1,10 +1,33 @@
 "use client"
+import qs from 'query-string'
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+
+import useDebounce from "@/hooks/useDebounce";
+import Input from './Input';
 
 const SearchInput = () => {
+    const router = useRouter();
+    const [value, setvalue] = useState<string>("");
+    const debouncedValue = useDebounce<string>(value, 500);
+
+    useEffect(() => {
+        const query = {
+            title: debouncedValue,
+        };
+        const url = qs.stringifyUrl({
+            url: '/search',
+            query: query
+        })
+        router.push(url);
+    }, [debouncedValue, router])
     return (
-        <div>
-            Search Input!
-        </div>
+        <Input
+            placeholder='What do you want to listen?'
+            value={value}
+            onChange={(e) => setvalue(e.target.value)}
+        />
     );
 }
 
