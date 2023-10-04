@@ -5,6 +5,8 @@ import { RxCaretLeft, RxCaretRight } from "react-icons/rx"
 import { HiHome } from "react-icons/hi"
 import { BiSearch } from "react-icons/bi";
 
+import useAuthModel from "@/hooks/useAuthModel";
+
 import Button from "./Button";
 
 interface HeaderProps {
@@ -12,6 +14,9 @@ interface HeaderProps {
     className?: string;
 }
 const Header: React.FC<HeaderProps> = ({ children, className }) => {
+
+    const { onOpen, isOpen } = useAuthModel();
+
     const router = useRouter();
     const handleLogout = () => {
         //handle Logout
@@ -99,12 +104,12 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
                 ">
                     <>
                         <div >
-                            <Button onClick={() => { }} className="bg-transparent text-neutral-300 font-medium">
+                            <Button onClick={onOpen} className="bg-transparent text-neutral-300 font-medium">
                                 Sign Up
                             </Button>
                         </div>
                         <div>
-                            <Button onClick={() => { }} className="bg-white px-6 py-2">
+                            <Button onClick={onOpen} className="bg-white px-6 py-2">
                                 Login
                             </Button>
                         </div>
