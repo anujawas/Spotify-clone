@@ -1,9 +1,15 @@
 "use client"
 import { TbPlaylist } from "react-icons/tb"
 import { AiOutlinePlus } from "react-icons/ai"
+import useAuthModel from "@/hooks/useAuthModel"
+import { useUser } from "@/hooks/useUser"
 const Library = () => {
+    const authModel = useAuthModel();
+    const { user } = useUser();
     const onClick = () => {
-        //handle clicks later
+        if (!user) {
+            return authModel.onOpen();
+        }
     }
     return (
         <div className="flex flex-col">
