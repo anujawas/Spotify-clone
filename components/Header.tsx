@@ -12,6 +12,7 @@ import { useUser } from "@/hooks/useUser";
 import useAuthModel from "@/hooks/useAuthModel";
 
 import Button from "./Button";
+import Link from "next/link";
 
 interface HeaderProps {
     children: React.ReactNode;
@@ -91,8 +92,11 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
                         justify-center
                         hover:opacity-75
                         transition
-                    ">
-                        <HiHome className="text-black" size={20} />
+                    "
+                    >
+                        <Link href={'/'}>
+                            <HiHome className="text-black" size={20} />
+                        </Link>
                     </button>
                     <button type="button"
                         title="search"
@@ -106,7 +110,9 @@ const Header: React.FC<HeaderProps> = ({ children, className }) => {
                         hover:opacity-75
                         transition
                     ">
-                        <BiSearch className="text-black" size={20} />
+                        <Link href={'/search'}>
+                            <BiSearch className="text-black" size={20} />
+                        </Link>
                     </button>
                 </div>
                 <div
