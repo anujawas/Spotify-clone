@@ -11,6 +11,7 @@ import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerXMark, HiSpeakerWave } from 'react-icons/hi2'
 import { useEffect, useState } from 'react';
 import { useSound } from 'use-sound'
+import AudioSlider from "./AudioSlider";
 
 interface PlayerContentProps {
     song: Song;
@@ -86,9 +87,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
     }
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 h-full">
-            <div className="h-[4px] w-full bg-white fixed mb-10">
-                <input className="w-full" placeholder="audio-range" type={'range'} value={50} id="progress" />
-            </div>
+            <AudioSlider />
             <div className="flex w-full justify-start">
                 <div className="flex items-center gap-x-4">
                     <MediaItem data={song} />
