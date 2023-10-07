@@ -1,9 +1,7 @@
-"use client"
+"use"
 const AudioSlider = () => {
     return (
-        <div className="h-[4px] w-full bg-white fixed mb-10">
-            <input className="w-full" placeholder="audio-range" type={'range'} value={50} id="progress" />
-        </div>
+        <input className="h-[6px] w-[98%] bg-green fixed bottom-[80px] right-[1%]  rounded-md" placeholder="audio-range" type={'range'} value={50} id="progress" />
     );
 }
 
