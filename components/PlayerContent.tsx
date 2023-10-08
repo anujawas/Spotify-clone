@@ -49,7 +49,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
         player.setId(prevSong);
     }
 
-    const [play, { pause, sound }] = useSound<any>(
+    const [play, { pause, sound, duration }] = useSound<any>(
         songUrl, {
         volume: volume,
         onplay: () => setIsPlaying(true),
@@ -87,7 +87,6 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
     }
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 h-full">
-            <AudioSlider />
             <div className="flex w-full justify-start">
                 <div className="flex items-center gap-x-4">
                     <MediaItem data={song} />
@@ -100,22 +99,25 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
                     <Icon size={30} className="text-black" />
                 </div>
             </div>
-            <div className="hidden h-full md:flex justify-center items-center w-full max-w-[722px] gap-x-6">
-                <AiFillStepBackward
-                    onClick={onPlayPrevious}
-                    size={30}
-                    className="text-neutral-400 hover:text-white cursor-pointer transition"
-                />
-                <div onClick={handlePlay}
-                    className="
+            <div className=" flex flex-col">
+                <div className="hidden h-[70%] md:flex justify-center items-center w-full max-w-[722px] gap-x-6">
+                    <AiFillStepBackward
+                        onClick={onPlayPrevious}
+                        size={30}
+                        className="text-neutral-400 hover:text-white cursor-pointer transition"
+                    />
+                    <div onClick={handlePlay}
+                        className="
                 flex items-center justify-center h-10 w-10 rounded-full bg-white p-1 cursor-pointer">
-                    <Icon size={30} className="text-black" />
+                        <Icon size={30} className="text-black" />
+                    </div>
+                    <AiFillStepForward
+                        onClick={onPlayNext}
+                        size={30}
+                        className="text-neutral-400 hover:text-white cursor-pointer transition"
+                    />
                 </div>
-                <AiFillStepForward
-                    onClick={onPlayNext}
-                    size={30}
-                    className="text-neutral-400 hover:text-white cursor-pointer transition"
-                />
+                <AudioSlider duration={duration} isPlaying={isPlaying} />
             </div>
 
             <div className="hidden md:flex w-full justify-end pr-2">
