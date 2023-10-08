@@ -41,7 +41,7 @@ const AudioSlider: React.FC<AudioSliderProps> = ({ duration, isPlaying }) => {
         <div className="w-full h-full flex items-center gap-x-2 justify-center hover-div">
             <p className="text-sm font-bold">{toHHMMSS(Math.floor(currValue))}</p>
             <input placeholder="audio-range" type={'range'} value={currValue} min={0} step={1} max={Math.ceil(duration / 1000)} id="progress" />
-            <p className="text-sm font-bold">{toHHMMSS(Math.ceil(duration / 1000))}</p>
+            <p className="text-sm font-bold">{toHHMMSS(Math.ceil(duration / 1000) - 5)}</p>
         </div>
     );
 }
