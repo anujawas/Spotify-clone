@@ -6,9 +6,11 @@ import LikeButton from "./LikeButton";
 import VolumeSlider from "./VolumeSlider";
 import usePlayer from "@/hooks/usePlayer";
 
-import { BsPauseFill, BsPlayFill } from 'react-icons/bs'
+import { BsPauseFill, BsPlayFill, BsRepeat, BsRepeat1 } from 'react-icons/bs'
 import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerXMark, HiSpeakerWave } from 'react-icons/hi2'
+import { FaShuffle } from 'react-icons/fa6'
+
 import { useEffect, useState } from 'react';
 import { useSound } from 'use-sound'
 import AudioSlider from "./AudioSlider";
@@ -30,7 +32,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
             return;
         }
         const currIndex = player.ids.findIndex((id) => id === player.activeId);
-        const nextSong = player.ids[currIndex + 1];
+        const nextSong = player.isRepeat ? currIndex.toString() : player.isShuffle ? (Math.ceil(Math.random() * player.ids.length) - 1).toString() : player.ids[currIndex + 1];
         if (!nextSong) {
             return player.setId(player.ids[0]);
         }
@@ -42,7 +44,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
             return;
         }
         const currIndex = player.ids.findIndex((id) => id === player.activeId);
-        const prevSong = player.ids[currIndex - 1];
+        const prevSong = player.isRepeat ? currIndex.toString() : player.ids[currIndex - 1];
         if (!prevSong) {
             return player.setId(player.ids[player.ids.length - 1]);
         }
@@ -77,7 +79,20 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
             pause();
         }
     }
-
+    const handleShuffle = () => {
+        if (player.isShuffle) {
+            player.setIsShuffle(false);
+        } else {
+            player.setIsShuffle(true);
+        }
+    }
+    const handleRepeat = () => {
+        if (player.isRepeat) {
+            player.setIsRepeat(false);
+        } else {
+            player.setIsRepeat(true);
+        }
+    }
     const toggleMute = () => {
         if (volume === 0) {
             setVolume(1);
@@ -85,6 +100,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
             setVolume(0);
         }
     }
+    const RepeatIcon = player.isRepeat ? BsRepeat1 : BsRepeat;
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 h-full">
             <div className="flex w-full justify-start">
@@ -101,6 +117,8 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
             </div>
             <div className=" flex flex-col">
                 <div className="hidden h-[70%] md:flex justify-center items-center w-full max-w-[722px] gap-x-6">
+                    <FaShuffle className={player.isShuffle ? "text-green-600 brightness-90 hover:brightness-200 hover:text-green-500 cursor-pointer" : "text-neutral-400 hover:text-white cursor-pointer"} size={23}
+                        onClick={handleShuffle} />
                     <AiFillStepBackward
                         onClick={onPlayPrevious}
                         size={30}
@@ -115,6 +133,10 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
                         onClick={onPlayNext}
                         size={30}
                         className="text-neutral-400 hover:text-white cursor-pointer transition"
+                    />
+                    <RepeatIcon size={24}
+                        className={player.isRepeat ? "text-green-600 hover:brightness-200 cursor-pointer font-bold" : "text-neutral-400 hover:text-white cursor-pointer font-bold"}
+                        onClick={handleRepeat}
                     />
                 </div>
                 <AudioSlider duration={duration} isPlaying={isPlaying} />
