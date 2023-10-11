@@ -1,23 +1,30 @@
 "use client"
 
-import { useState } from "react";
+import usePlayer from "@/hooks/usePlayer";
+import { useEffect, useState } from "react";
 
 interface AudioSliderProps {
     duration: number | null;
-    isPlaying: boolean
+    isPlaying: boolean;
 }
 const AudioSlider: React.FC<AudioSliderProps> = ({ duration, isPlaying }) => {
-    const [currValue, setCurrValue] = useState<number>(0);
 
+    const player = usePlayer();
     if (isPlaying) {
         setTimeout(() => {
-            setCurrValue(currValue + 0.2);
+            player.setCurrValue(player.currValue + 0.2);
         }, 200);
+    } else {
+
     }
 
     if (!duration) {
         return (
-            <></>
+            <div className="w-full h-full flex items-center gap-x-2 justify-center hover-div">
+                <p className="text-sm font-bold text-white">00:00</p>
+                <input placeholder="audio-range" type={'range'} value={player.currValue} min={0} step={1} max={100} id="progress" readOnly />
+                <p className="text-sm font-bold text-white">00:00</p>
+            </div>
         )
     }
     const toHHMMSS = (sec_num: number) => {
@@ -39,8 +46,8 @@ const AudioSlider: React.FC<AudioSliderProps> = ({ duration, isPlaying }) => {
     }
     return (
         <div className="w-full h-full flex items-center gap-x-2 justify-center hover-div">
-            <p className="text-sm font-bold text-white">{toHHMMSS(Math.floor(currValue))}</p>
-            <input placeholder="audio-range" type={'range'} value={currValue} min={0} step={1} max={Math.ceil(duration / 1000)} id="progress" />
+            <p className="text-sm font-bold text-white">{toHHMMSS(Math.floor(player.currValue))}</p>
+            <input placeholder="audio-range" type={'range'} value={player.currValue} min={0} step={1} max={Math.ceil(duration / 1000)} id="progress" readOnly />
             <p className="text-sm font-bold text-white">{toHHMMSS(Math.ceil(duration / 1000) - 5)}</p>
         </div>
     );
