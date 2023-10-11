@@ -11,7 +11,7 @@ import { AiFillStepBackward, AiFillStepForward } from "react-icons/ai";
 import { HiSpeakerXMark, HiSpeakerWave } from 'react-icons/hi2'
 import { FaShuffle } from 'react-icons/fa6'
 
-import { useEffect, useState } from 'react';
+import { KeyboardEvent, useEffect, useState } from 'react';
 import { useSound } from 'use-sound'
 import AudioSlider from "./AudioSlider";
 
@@ -81,6 +81,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
     );
 
     useEffect(() => {
+        player.setCurrValue(0);
         sound?.play();
 
         return () => {
@@ -117,9 +118,18 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
         }
     }
 
+    const handleKeyPress = (e: MouseEvent) => {
+        console.log(e);
+
+        if (e.button.toString() === "Space") {
+            handlePlay();
+        }
+
+    }
+
     const RepeatIcon = player.isRepeat ? BsRepeat1 : BsRepeat;
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 h-full" >
+        <div className="grid grid-cols-2 md:grid-cols-3 h-full" onClick={() => handleKeyPress}>
             <div className="flex w-full justify-start">
                 <div className="flex items-center gap-x-4">
                     <MediaItem data={song} />

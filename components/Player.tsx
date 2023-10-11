@@ -21,6 +21,7 @@ const Player = () => {
                 key={songUrl}
                 song={song}
                 songUrl={songUrl}
+
             />
         </div>
     );
