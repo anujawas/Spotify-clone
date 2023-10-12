@@ -14,19 +14,8 @@ const AudioSlider: React.FC<AudioSliderProps> = ({ duration, isPlaying }) => {
         setTimeout(() => {
             player.setCurrValue(player.currValue + 0.2);
         }, 200);
-    } else {
-
     }
 
-    if (!duration) {
-        return (
-            <div className="w-full h-full flex items-center gap-x-2 justify-center hover-div">
-                <p className="text-sm font-bold text-white">00:00</p>
-                <input placeholder="audio-range" type={'range'} value={player.currValue} min={0} step={1} max={100} id="progress" readOnly />
-                <p className="text-sm font-bold text-white">00:00</p>
-            </div>
-        )
-    }
     const toHHMMSS = (sec_num: number) => {
         var hours = Math.floor(sec_num / 3600);
         var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
@@ -46,9 +35,9 @@ const AudioSlider: React.FC<AudioSliderProps> = ({ duration, isPlaying }) => {
     }
     return (
         <div className="w-full h-full flex items-center gap-x-2 justify-center hover-div">
-            <p className="text-sm font-bold text-white">{toHHMMSS(Math.floor(player.currValue))}</p>
-            <input placeholder="audio-range" type={'range'} value={player.currValue} min={0} step={1} max={Math.ceil(duration / 1000)} id="progress" readOnly />
-            <p className="text-sm font-bold text-white">{toHHMMSS(Math.ceil(duration / 1000) - 5)}</p>
+            <p className="text-sm font-bold text-white">{!duration ? "00:00" : toHHMMSS(Math.floor(player.currValue))}</p>
+            <input placeholder="audio-range" type={'range'} value={player.currValue} min={0} step={1} max={!duration ? 100 : Math.ceil(duration / 1000)} id="progress" readOnly />
+            <p className="text-sm font-bold text-white">{!duration ? "00:00" : toHHMMSS(Math.ceil(duration / 1000) - 5)}</p>
         </div>
     );
 }
