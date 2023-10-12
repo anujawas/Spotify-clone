@@ -32,7 +32,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
         if (player.ids.length === 0) {
             return;
         }
-        player.setCurrValue(0);
+
         const currIndex = player.ids.findIndex((id) => id === player.activeId);
         const randomIndex = (Math.ceil(Math.random() * player.ids.length)) - 1;
         const nextSong = player.isRepeat ? player.ids[currIndex] : player.isShuffle ? player.ids[randomIndex === currIndex ? currIndex + 1 : randomIndex] : player.ids[currIndex + 1];
@@ -43,6 +43,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
         if (player.isRepeat) {
             stop();
             play();
+
         }
         player.setId(nextSong);
 
@@ -53,7 +54,6 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
         if (player.ids.length === 0) {
             return;
         }
-        player.setCurrValue(0);
         const currIndex = player.ids.findIndex((id) => id === player.activeId);
         const prevSong = player.isRepeat ? player.ids[currIndex] : player.ids[currIndex - 1];
         if (!prevSong) {
@@ -87,7 +87,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
         return () => {
             sound?.unload();
         }
-    }, [sound]);
+    }, [sound, player.activeId]);
 
     const handlePlay = () => {
         if (!isPlaying) {
@@ -118,18 +118,10 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
         }
     }
 
-    const handleKeyPress = (e: MouseEvent) => {
-        console.log(e);
-
-        if (e.button.toString() === "Space") {
-            handlePlay();
-        }
-
-    }
 
     const RepeatIcon = player.isRepeat ? BsRepeat1 : BsRepeat;
     return (
-        <div className="grid grid-cols-2 md:grid-cols-3 h-full" onClick={() => handleKeyPress}>
+        <div className="grid grid-cols-2 md:grid-cols-3 h-full">
             <div className="flex w-full justify-start">
                 <div className="flex items-center gap-x-4">
                     <MediaItem data={song} />
