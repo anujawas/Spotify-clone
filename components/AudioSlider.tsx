@@ -15,7 +15,6 @@ const AudioSlider: React.FC<AudioSliderProps> = ({ duration, isPlaying }) => {
             player.setCurrValue(player.currValue + 0.2);
         }, 200);
     }
-
     const toHHMMSS = (sec_num: number) => {
         var hours = Math.floor(sec_num / 3600);
         var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
