@@ -73,7 +73,10 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
         onplay: () => setIsPlaying(true),
         onend: () => {
             setIsPlaying(false);
-            onPlayNext();
+            const currIndex = player.ids.findIndex((id) => id === player.activeId);
+            if (currIndex !== player.ids.length - 1) {
+                onPlayNext();
+            }
         },
         onpause: () => setIsPlaying(false),
         format: ['mp3']
@@ -119,7 +122,7 @@ const PlayerContent: React.FC<PlayerContentProps> = ({ song, songUrl }) => {
     }
 
 
-    const RepeatIcon = player.isRepeat ? BsRepeat1 : BsRepeat;
+    const RepeatIcon = BsRepeat;
     return (
         <div className="grid grid-cols-2 md:grid-cols-3 h-full">
             <div className="flex w-full justify-start">
